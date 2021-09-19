@@ -50,6 +50,9 @@ class botClient extends Client {
 		// if no command like this do nothing
 		if (!client.commands.has(command)) return;
 		var comid = client.commands.get(command);
+		if (client.getCmdDisabled (comid.name, message.guild.id)) {
+			return;
+		}
 
 		if (comid.mod && !message.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
 			return client.util.send(client, message, command, `${message.author} Tylko serwerowe władze mogą tego używać!`);
@@ -72,8 +75,8 @@ class botClient extends Client {
 
 		try {
 			comid.execute(client, message, args);
-			if (comid.nodel ) return;
-			let d = client.getDelCmd(message.guild.id);			
+			if (comid.nodel) return;
+			let d = client.getDelCmd(message.guild.id);
 			if (d) {
 				try {
 					message.delete();
