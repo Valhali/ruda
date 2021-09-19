@@ -1,0 +1,16 @@
+upload.txt
+start.cmd
+db.db-wal
+db.db-shm
+db.db
+
+
+#self
+# .gitignore
+
+#env
+.env
+
+# node module
+node_modules/
+

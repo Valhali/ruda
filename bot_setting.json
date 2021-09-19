@@ -1,0 +1,22 @@
+{
+	"description":"Najlepszy rudy kod w tej części galaktyki.",
+	"color":{
+		"info":"#20a0f0",
+		"warning":"#FFAC33",
+		"danger":"#f05040",
+		"test":"#0055ff",
+		"hack":"#6B9913"
+	},
+
+	"usefulLink":[
+		{
+			"name" : "invite",
+			"url" : "https://discordapp.com/oauth2/authorize?client_id={{botId}}&scope=bot&permissions=523328"
+		},
+		{
+			"name" : "Github_repo",
+			"url": "https://github.com/GoruAkiba/simple-master-bot"
+		}
+		
+	]
+}
