@@ -2,12 +2,12 @@ Pomysly do wprowadzenia:
 - Obsługa wątków
 - Obsługa przycisków/combo
 - wyłączenia/ukrycie komend
-- usuwanie lub nie komendy
+✔- usuwanie lub nie komendy
 - /slash komendy
 - auto komennda o danej godzinie
 - ograniczenia na kanał (tylko obrazek, tylko link itp)
 - ignorowanie kanału odpowiedzi
 - kanały zakazane/dozwolone
 - ignorowane role/kanały/ludzie w cenzorze
-- alow mode nie dotyczy admina lub nie mozna dac wyzszej roli
+- slow mode nie dotyczy admina lub nie mozna dac wyzszej roli
 - 

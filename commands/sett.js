@@ -19,7 +19,7 @@ module.exports = {
 		console.log(args);
 		let prefix = client.getPrefix(message.guild.id);
 
-		if (args.length < 1) return client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett subkomenda opcje...\``);
+		if (args.length < 1) return client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}${this.name} subkomenda opcje...\``);
 
 		let cmd = args[0].toLowerCase();
 

@@ -27,21 +27,14 @@ module.exports = {
 		var util = client.util;
 		const embed = new Discord.MessageEmbed();
 
-		let js = client.getCmdOff.get(message.guild.id);
+		//let js = client.getCmdOff.get(message.guild.id);
 		let js3 = client.getCmdHidden.get(message.guild.id);
 		var cm = commandFiles.map((e, i) => {
 			const cmd = require(`../commands/${e}`)
 			let disable = false;
 			let hidden = false;
 			let js2 = {};
-			if (typeof(js)!="undefined") {// komendy wyłaczone
-				js2 = JSON.parse(js.conf);
-				if (js2["disable"].includes(cmd.name) ) {
-					disable = true;
-				} else {
-					disable = false;
-				}
-			}
+			
 			if (typeof(js3)!="undefined") {  //komendy ukryte
 				js4 = JSON.parse(js3.conf);
 				if (js4["hidden"].includes(cmd.name) ) {
@@ -51,6 +44,7 @@ module.exports = {
 				}
 			}
 			
+			disable = client.getCmdDisabled(cmd.name, message.guild.id);
 			if (!cmd.hidden && !disable && !hidden) {
 				return ` **${util.tn(cmd.name,2)}** → ${util.tn(cmd.aliases.join(", "),4)}`
 			}
