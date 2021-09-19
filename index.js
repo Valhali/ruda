@@ -108,6 +108,9 @@ client.once('ready', () => {
 			}
 			let col = k.join(",")
 			if (js[i][1]) {
+				if ( !client.db.prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name='${i}';`).get()){
+					continue;
+				}
 				try {
 					client.db.prepare(`DELETE FROM ${i}`).run();
 				} catch (error) {

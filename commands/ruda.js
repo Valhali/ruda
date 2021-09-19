@@ -52,7 +52,7 @@ module.exports = {
 					hidden = false;
 				}
 			}
-			console.log(cmd.name, cmd.srv != false && cmd.srv == message.guild.id)
+			//console.log(cmd.name, cmd.srv != false && cmd.srv == message.guild.id)
 			if (!cmd.hidden && !disable && !hidden) {
 				if (cmd.srv == false || cmd.srv == message.guild.id) {
 					return ` ${p}**${util.tn(cmd.name,2)}** ${cmd.ussage} → ${cmd.description}`;
