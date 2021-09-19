@@ -66,13 +66,22 @@ class botClient extends Client {
 		}
 
 		if (comid.srv && comid.srv !== message.channel.id) {
-			return client.util.send(client, message, command, `${message.author} Komenda nie może być użyta na tym serwerze!`) ;				
+			return; //client.util.send(client, message, command, `${message.author} Komenda nie może być użyta na tym serwerze!`) ;				
 		}
 
 
 		try {
 			comid.execute(client, message, args);
-			message.delete();
+			if (comid.nodel ) return;
+			let d = client.getDelCmd(message.guild.id);			
+			if (d) {
+				try {
+					message.delete();
+				} catch (err) {
+					console.log(err);
+				};
+			};
+
 		} catch (error) {
 			console.error(error);
 			message.reply(`${message.author} Coś się popimpało i komenda nie zadziałała ;( `);

@@ -74,7 +74,7 @@ client.once('ready', () => {
 		type: 'WATCHING'
 	});
 
-	client.getPrefix = (id)=>{
+	client.getPrefix = (id) => {
 		let p = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='prefix';").get(id);
 		if (p) return p.conf;
 		return process.env.Prefix;
@@ -108,7 +108,7 @@ client.once('ready', () => {
 			}
 			let col = k.join(",")
 			if (js[i][1]) {
-				if ( !client.db.prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name='${i}';`).get()){
+				if (!client.db.prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name='${i}';`).get()) {
 					continue;
 				}
 				try {
@@ -126,6 +126,28 @@ client.once('ready', () => {
 
 	})
 
+	//if (cmd =="sett") return client.util.send(client, message, "sett", `${message.author} Tej komendy nie można wyłączyć!`) ;				
+
+	client.setDelCmd = (d, id) => {
+		if (process.env.DELCMD == d) {
+			return client.db.prepare("DELETE FROM config WHERE id='delcmd' AND serwer=?;").run(id);
+		}
+		if (client.db.prepare("SELECT * FROM config WHERE id='delcmd' AND serwer=?;").get(id)) {
+			return client.db.prepare("UPDATE OR IGNORE config SET conf=? WHERE id='delcmd' AND serwer=?;").run([d, id])
+		} else {
+			return client.db.prepare("INSERT OR IGNORE INTO config(id, conf, serwer) VALUES( 'delcmd',?,?) ;").run([d, id]);
+		}
+	}
+
+
+	
+	client.getDelCmd = (id) => {
+		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='delcmd';").get(id);
+		if (d) return false;
+		return process.env.DELCMD;
+	}
+
+	
 	/*//client.api.applications(client.user.id).commands("887638188791840769").delete(); 
 	/*
 		client.api.applications(client.user.id).commands.get().then((result) => {
