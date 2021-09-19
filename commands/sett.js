@@ -34,7 +34,7 @@ module.exports = {
 			client.util.send(client, message, this.name, `Prefix ustawiony na \`${client.getPrefix(message.guild.id)}\``);
 		}
 
-		if (cmd === "delcmd") {
+		if (cmd === "delcmd") { // usuwnaie komend?
 			if (args.length < 2) return client.util.send(client, message, this.name, `${message.author} Musisz podać wartość.`);
 			let de = false;
 			let d = args[1].toLowerCase();
@@ -51,7 +51,7 @@ module.exports = {
 			if (!de) client.util.send(client, message, this.name, `${message.author} Nie rozumiem co chcesz zrobić :(`);
 		}
 
-		if (cmd === "enable") {
+		if (cmd === "enable") { // włącz/wyłacz komende
 			if (args.length < 3) return client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett enable nazwa_komendy włącz_wyłącz.\``);
 			let en = false;
 			let com = args[1].toLowerCase();
@@ -77,6 +77,7 @@ module.exports = {
 			if (!en) client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett enable nazwa_komendy włącz_wyłącz.\``);
 		}
 
+		
 		//return client.util.send(client, message, this.name, `???`);
 	}
 }
