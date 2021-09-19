@@ -3,6 +3,7 @@ start.cmd
 db.db-wal
 db.db-shm
 db.db
+TODO.txt
 
 
 #self
