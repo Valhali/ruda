@@ -5,6 +5,7 @@
   "engines": {
     "node": "16.x"
   },
+  "start": "node index.js",
   "main": "index.js",
   "scripts": {
     "dev": "node bin/dev.js"
