@@ -60,7 +60,7 @@ module.exports = {
 				for (i of client.commands) {
 					if (i.includes(com)) {						
 						if (typeof (i[1].nooff) != "undefined" && i[1].nooff == true) {
-							return client.util.send(client, message, this.name, `${message.author} Komenda \`${i[1].name}\` Nie może być wyłączona.\``);
+							return client.util.send(client, message, this.name, `${message.author} Komenda \`${i[1].name}\` Nie może być wyłączona.`);
 						}
 						break;
 					}
