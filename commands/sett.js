@@ -14,9 +14,13 @@ module.exports = {
 	mod: true,
 	nsfw: false,
 	srv: false,
+	nooff: true,
 	async execute(client, message, args) {
 		console.log(args);
 		let prefix = client.getPrefix(message.guild.id);
+
+		if (args.length < 1) return client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett subkomenda opcje...\``);
+
 		let cmd = args[0].toLowerCase();
 
 		if (cmd === "prefix") {
@@ -37,14 +41,41 @@ module.exports = {
 			if (d == "0" || d == "off") {
 				client.setDelCmd(0, message.guild.id);
 				de = true;
+				client.util.send(client, message, this.name, `Zapisane!`);
 			}
 			if (d == "1" || d == "on") {
 				client.setDelCmd(1, message.guild.id);
 				de = true;
+				client.util.send(client, message, this.name, `Zapisane!`);
 			}
 			if (!de) client.util.send(client, message, this.name, `${message.author} Nie rozumiem co chcesz zrobić :(`);
 		}
 
+		if (cmd === "enable") {
+			if (args.length < 3) return client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett enable nazwa_komendy włącz_wyłącz.\``);
+			let en = false;
+			let com = args[1].toLowerCase();
+			let d = args[2].toLowerCase();
+			if (d == "0" || d == "off") {
+				for (i of client.commands) {
+					if (i.includes(com)) {						
+						if (typeof (i[1].nooff) != "undefined" && i[1].nooff == true) {
+							return client.util.send(client, message, this.name, `${message.author} Komenda \`${i[1].name}\` Nie może być wyłączona.\``);
+						}
+						break;
+					}
+				}
+				client.setCmdDisabled(com, message.guild.id, 0);
+				en = true;
+				client.util.send(client, message, this.name, `Zapisane!`);
+			}
+			if (d == "1" || d == "on") {
+				client.setCmdDisabled(com, message.guild.id, 1);
+				en = true;
+				client.util.send(client, message, this.name, `Zapisane!`);
+			}
+			if (!en) client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett enable nazwa_komendy włącz_wyłącz.\``);
+		}
 
 		//return client.util.send(client, message, this.name, `???`);
 	}

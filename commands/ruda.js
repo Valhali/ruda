@@ -17,6 +17,7 @@ module.exports = {
 	mod: false,
 	nsfw: false,
 	srv: false,
+	nooff: true,
 	async execute(client, message, args) {
 		const {
 			description,
@@ -52,8 +53,10 @@ module.exports = {
 					hidden = false;
 				}
 			}
+			let disable2 = client.getCmdDisabled(cmd.name, message.guild.id);
+			//console.log("dis2:", disable2, " → ", cmd.name);
 			//console.log(cmd.name, cmd.srv != false && cmd.srv == message.guild.id)
-			if (!cmd.hidden && !disable && !hidden) {
+			if (!cmd.hidden && !disable && !hidden && !disable2 ) {
 				if (cmd.srv == false || cmd.srv == message.guild.id) {
 					return ` ${p}**${util.tn(cmd.name,2)}** ${cmd.ussage} → ${cmd.description}`;
 				}

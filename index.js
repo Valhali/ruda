@@ -44,13 +44,13 @@ for (const file of commandFiles) {
 	// set a new item in the Collection
 	// with the key as the command name and the value as the exported module
 	client.commands.set(command.name, command);
-	console.log(`Loading: ${file} as ${command.name}`)
+	//console.log(`Loading: ${file} as ${command.name}`)
 	// set if there aliase !== null
 	// // with the key as the each of command aliases and the value as the exported module
 	command.aliases.map(e => {
-		console.log(e);
+		//console.log(e);
 		client.commands.set(e, command);
-		console.log(`Loading: ${file} as ${e}`)
+		//console.log(`Loading: ${file} as ${e}`)
 	})
 }
 
@@ -126,7 +126,6 @@ client.once('ready', () => {
 
 	})
 
-	//if (cmd =="sett") return client.util.send(client, message, "sett", `${message.author} Tej komendy nie można wyłączyć!`) ;				
 
 	client.setDelCmd = (d, id) => {
 		if (process.env.DELCMD == d) {
@@ -140,14 +139,52 @@ client.once('ready', () => {
 	}
 
 
-	
+
 	client.getDelCmd = (id) => {
 		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='delcmd';").get(id);
 		if (d) return false;
 		return process.env.DELCMD;
 	}
 
-	
+	client.setCmdDisabled = (cmd, id, val) => {
+		let js = client.db.prepare("SELECT conf FROM config WHERE id='cmdoff' AND serwer=?;").get(id);
+		if (js) {
+			js = JSON.parse(js.conf);
+		} else {
+			js = {};
+		}
+		let c = '';
+		for (i of client.commands) {
+			if (i.includes(cmd)) {
+				c = i[1].name;				
+				break;				
+			}
+		}
+		if (val == 1) {
+			js[c] = undefined;
+		} else {
+			js[c] = val;
+		}
+
+		if (client.db.prepare("SELECT * FROM config WHERE id='cmdoff' AND serwer=?;").get(id)) {
+			return client.db.prepare("UPDATE OR IGNORE config SET conf=? WHERE id='cmdoff' AND serwer=?;").run([JSON.stringify(js), id])
+		} else {
+			return client.db.prepare("INSERT OR IGNORE INTO config(id, conf, serwer) VALUES( 'cmdoff',?,?) ;").run([JSON.stringify(js), id]);
+		}
+
+	}
+
+
+	client.getCmdDisabled = (cmd, id) => {
+		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='cmdoff';").get(id);
+		if (typeof(d)  == "undefined") return false;
+		let js = JSON.parse(d.conf);
+		if (typeof(js[cmd])  != "undefined"){
+			if (js[cmd]==0) return true;
+		}
+		return false;
+	}
+
 	/*//client.api.applications(client.user.id).commands("887638188791840769").delete(); 
 	/*
 		client.api.applications(client.user.id).commands.get().then((result) => {
