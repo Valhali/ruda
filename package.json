@@ -1,7 +1,10 @@
 {
-  "name": "master-bot",
-  "version": "1.0.0",
-  "description": "just dumies bot",
+  "name": "ruda-bot",
+  "version": "3.0.0",
+  "description": "",  
+  "engines": {
+    "node": "16.x"
+  },
   "main": "index.js",
   "scripts": {
     "dev": "node bin/dev.js"
