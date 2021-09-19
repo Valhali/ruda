@@ -1,1 +1,1 @@
-worker: node --unhandled-rejections=none index.js
+worker: node index.js
