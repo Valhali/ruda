@@ -10,4 +10,4 @@ Pomysly do wprowadzenia:
 - kanały zakazane/dozwolone
 - ignorowane role/kanały/ludzie w cenzorze
 - slow mode nie dotyczy admina lub nie mozna dac wyzszej roli
-- 
+- cooldown na komendy per srv/usr/chan/role

@@ -80,8 +80,6 @@ client.once('ready', () => {
 		return process.env.Prefix;
 	}
 	client.response = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='response';");
-	//client.getCmdOff = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='disabled';");
-	client.getCmdHidden = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='hidden';");
 	client.logChanel = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='log';");
 	client.impset = client.downl(`${process.env.IMPORT_SET}${encodeURI(new Date().toString() ) }`);
 
@@ -184,6 +182,49 @@ client.once('ready', () => {
 		}
 		return false;
 	}
+
+
+
+	client.setCmdHidden = (cmd, id, val) => {
+		let js = client.db.prepare("SELECT conf FROM config WHERE id='cmdhide' AND serwer=?;").get(id);
+		if (js) {
+			js = JSON.parse(js.conf);
+		} else {
+			js = {};
+		}
+		let c = '';
+		for (i of client.commands) {
+			if (i.includes(cmd)) {
+				c = i[1].name;				
+				break;				
+			}
+		}
+		if (val == 1) {
+			js[c] = undefined;
+		} else {
+			js[c] = val;
+		}
+
+		if (client.db.prepare("SELECT * FROM config WHERE id='cmdhide' AND serwer=?;").get(id)) {
+			return client.db.prepare("UPDATE OR IGNORE config SET conf=? WHERE id='cmdhided' AND serwer=?;").run([JSON.stringify(js), id])
+		} else {
+			return client.db.prepare("INSERT OR IGNORE INTO config(id, conf, serwer) VALUES( 'cmdhide',?,?) ;").run([JSON.stringify(js), id]);
+		}
+
+	}
+
+
+
+	client.getCmdHidden = (cmd, id) => {
+		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='cmdhide';").get(id);
+		if (typeof(d)  == "undefined") return false;
+		let js = JSON.parse(d.conf);
+		if (typeof(js[cmd])  != "undefined"){
+			if (js[cmd]==0) return true;
+		}
+		return false;
+	}
+
 
 	/*//client.api.applications(client.user.id).commands("887638188791840769").delete(); 
 	/*

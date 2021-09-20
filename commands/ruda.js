@@ -30,22 +30,14 @@ module.exports = {
 		var util = client.util;
 		const embed = new Discord.MessageEmbed();
 
-		let js3 = client.getCmdHidden.get(message.guild.id);
 		var cm = commandFiles.map((e, i) => {
 			const cmd = require(`../commands/${e}`)
 			let disable = false;
 			let hidden = false;
 
-			if (typeof (js3) != "undefined") { //komendy ukryte
-				js4 = JSON.parse(js3.conf);
-				if (js4["hidden"].includes(cmd.name)) {
-					hidden = true;
-				} else {
-					hidden = false;
-				}
-			}
 			disable = client.getCmdDisabled(cmd.name, message.guild.id);
-			if (!cmd.hidden && !disable && !hidden) {
+			hidden = client.getCmdHidden(cmd.name, message.guild.id);
+			if (!cmd.hidden && !disable && !hidden ) {
 				if (cmd.srv == false || cmd.srv == message.guild.id) {
 					return ` ${p}**${util.tn(cmd.name,2)}** ${cmd.ussage} → ${cmd.description}`;
 				}

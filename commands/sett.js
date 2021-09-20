@@ -18,7 +18,6 @@ module.exports = {
 	async execute(client, message, args) {
 		console.log(args);
 		let prefix = client.getPrefix(message.guild.id);
-
 		if (args.length < 1) return client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}${this.name} subkomenda opcje...\``);
 
 		let cmd = args[0].toLowerCase();
@@ -75,6 +74,25 @@ module.exports = {
 				client.util.send(client, message, this.name, `Zapisane!`);
 			}
 			if (!en) client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett enable nazwa_komendy włącz_wyłącz.\``);
+		}
+
+		if (cmd === "show") { // ukryj komende
+			if (args.length < 3) return client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett enable nazwa_komendy włącz_wyłącz.\``);
+			let en = false;
+			let com = args[1].toLowerCase();
+			let d = args[2].toLowerCase();
+			if (d == "0" || d == "hide") {
+
+				client.setCmdHidden(com, message.guild.id, 0);
+				en = true;
+				client.util.send(client, message, this.name, `Zapisane!`);
+			}
+			if (d == "1" || d == "show") {
+				client.setCmdHiden(com, message.guild.id, 1);
+				en = true;
+				client.util.send(client, message, this.name, `Zapisane!`);
+			}
+			if (!en) client.util.send(client, message, this.name, `${message.author} Składnia: \`${prefix}sett hide nazwa_komendy włącz_wyłącz.\``);
 		}
 
 		
