@@ -33,10 +33,14 @@ class botClient extends Client {
 		let p = client.getPrefix(message.guild.id);
 
 		// if people mention us, tell them about our prefix
-		if (message.mentions.users.size) {
+		/*if (message.mentions.users.size) {
 			if (message.mentions.users.first().id == client.user.id && message.content.length < 23) {
 				return message.reply(`Mój prefix na tym serwerze to \`\`${p}\`\`\nWpisz \`\`${p}ruda\`\` aby zobaczyć listę komend.`)
 			}
+		}*/
+
+		if (message.content ==`<@!${client.user.id}>` || message.content ==`<@${client.user.id}>`) {
+			return message.reply(`Mój prefix na tym serwerze to \`\`${p}\`\`\nWpisz \`\`${p}ruda\`\` aby zobaczyć listę komend.`);
 		}
 
 
@@ -50,7 +54,7 @@ class botClient extends Client {
 		// if no command like this do nothing
 		if (!client.commands.has(command)) return;
 		var comid = client.commands.get(command);
-		if (client.getCmdDisabled (comid.name, message.guild.id)) {
+		if (client.getCmdDisabled(comid.name, message.guild.id)) {
 			return;
 		}
 

@@ -80,7 +80,7 @@ client.once('ready', () => {
 		return process.env.Prefix;
 	}
 	client.response = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='response';");
-	client.getCmdOff = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='disabled';");
+	//client.getCmdOff = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='disabled';");
 	client.getCmdHidden = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='hidden';");
 	client.logChanel = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='log';");
 	client.impset = client.downl(`${process.env.IMPORT_SET}${encodeURI(new Date().toString() ) }`);
