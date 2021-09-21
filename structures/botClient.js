@@ -39,7 +39,7 @@ class botClient extends Client {
 			}
 		}*/
 
-		if (message.content ==`<@!${client.user.id}>` || message.content ==`<@${client.user.id}>`) {
+		if (message.content == `<@!${client.user.id}>` || message.content == `<@${client.user.id}>`) {
 			return message.reply(`Mój prefix na tym serwerze to \`\`${p}\`\`\nWpisz \`\`${p}ruda\`\` aby zobaczyć listę komend.`);
 		}
 
@@ -72,7 +72,7 @@ class botClient extends Client {
 			return client.util.send(client, message, command, `${message.author} Ta komenda wymaga użycia na kanale NSFW!`);
 		}
 
-		if (comid.srv && comid.srv !== message.channel.id) {
+		if (comid.srv.length > 0 && typeof (comid.srv[message.channel.id]) != "undefined") {
 			return; //client.util.send(client, message, command, `${message.author} Komenda nie może być użyta na tym serwerze!`) ;				
 		}
 

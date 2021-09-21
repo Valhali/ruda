@@ -16,7 +16,7 @@ module.exports = {
 	admin: false,
 	mod: false,
 	nsfw: false,
-	srv: false,
+	srv: [],
 	nooff: true,
 	async execute(client, message, args) {
 		const {

@@ -13,7 +13,7 @@ module.exports = {
 	admin: true,
 	mod: true,
 	nsfw: false,
-	srv: false,
+	srv: [],
 	nooff: true,
 	async execute(client, message, args) {
 		console.log(args);

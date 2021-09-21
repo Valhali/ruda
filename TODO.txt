@@ -1,13 +1,19 @@
 Pomysly do wprowadzenia:
 - Obsługa wątków
 - Obsługa przycisków/combo
-- wyłączenia/ukrycie komend
+✔- wyłączenia/ukrycie komend
 ✔- usuwanie lub nie komendy
 - /slash komendy
+- customowe slash komendy
 - auto komennda o danej godzinie
 - ograniczenia na kanał (tylko obrazek, tylko link itp)
-- ignorowanie kanału odpowiedzi
-- kanały zakazane/dozwolone
+- ignorowanie kanału odpowiedzi?
+- kanały zakazane/dozwolone 
 - ignorowane role/kanały/ludzie w cenzorze
 - slow mode nie dotyczy admina lub nie mozna dac wyzszej roli
 - cooldown na komendy per srv/usr/chan/role
+- podpiąc powiadomienia z YT
+- przywroc role po powrocie na serwer
+- Jakieś losowanie spośród wskazanej rangi (bo here i everyone to każdy jeden potrafi). 
+- Licznik wejść i wyjść użytkownika
+- 

@@ -154,8 +154,8 @@ client.once('ready', () => {
 		let c = '';
 		for (i of client.commands) {
 			if (i.includes(cmd)) {
-				c = i[1].name;				
-				break;				
+				c = i[1].name;
+				break;
 			}
 		}
 		if (val == 1) {
@@ -175,10 +175,10 @@ client.once('ready', () => {
 
 	client.getCmdDisabled = (cmd, id) => {
 		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='cmdoff';").get(id);
-		if (typeof(d)  == "undefined") return false;
+		if (typeof (d) == "undefined") return false;
 		let js = JSON.parse(d.conf);
-		if (typeof(js[cmd])  != "undefined"){
-			if (js[cmd]==0) return true;
+		if (typeof (js[cmd]) != "undefined") {
+			if (js[cmd] == 0) return true;
 		}
 		return false;
 	}
@@ -195,8 +195,8 @@ client.once('ready', () => {
 		let c = '';
 		for (i of client.commands) {
 			if (i.includes(cmd)) {
-				c = i[1].name;				
-				break;				
+				c = i[1].name;
+				break;
 			}
 		}
 		if (val == 1) {
@@ -217,47 +217,58 @@ client.once('ready', () => {
 
 	client.getCmdHidden = (cmd, id) => {
 		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id='cmdhide';").get(id);
-		if (typeof(d)  == "undefined") return false;
+		if (typeof (d) == "undefined") return false;
 		let js = JSON.parse(d.conf);
-		if (typeof(js[cmd])  != "undefined"){
-			if (js[cmd]==0) return true;
+		if (typeof (js[cmd]) != "undefined") {
+			if (js[cmd] == 0) return true;
 		}
 		return false;
 	}
 
+	client.api.applications(client.user.id).commands.get().then((result) => {
+		//console.log(result[0].name, " → ", result[0].id);
+		//client.api.applications(client.user.id).commands(result[0].id).delete();
+	});
+	client.api.applications(client.user.id).guilds("518828593741299717").commands.get().then((result) => {
+		//console.log(result[0].name, " → ", result[0].id);
+		//client.api.applications(client.user.id).guilds("518828593741299717").commands(result[0].id).delete();
+	});
 
-	/*//client.api.applications(client.user.id).commands("887638188791840769").delete(); 
-	/*
-		client.api.applications(client.user.id).commands.get().then((result) => {
-			console.log(result[0].name," → ",result[0].id);
-		});
-	*/
-	/*
-		client.api.applications(client.user.id).commands.post({data: {
-			name: 'help',
-			type: 1,
-			description: 'Lista rudych komend!'
-		}})
-	*/
+	let g = ["518828593741299717"]
+	for (i of g) {
+		client.api.applications(client.user.id).guilds(i).commands.post({
+			data: {
+				name: 'test',
+				type: 3,
+				//description: 'Lista rudych komend!'
+			}
+		})
+	}
 	//console.log(client);*/
 });
 
 
 client.on("interactionCreate", async interaction => {
 	console.log(interaction);
-	if (!interaction.isCommand()) return;
-	const command = client.commands.get(interaction.commandName);
-	if (!command) return;
-	try {
-		await command.execute(interaction.client);
-		interaction.channel.send("Wpisz ${prefix}ruda aby wyświetlić listę komend.")
-	} catch (error) {
-		if (error) console.error(error);
-		await interaction.reply({
-			content: 'Coś się popimpało i nie wyszło z komendą ;( ',
-			ephemeral: true
-		});
+	if (interaction.isCommand()) {
+		const command = client.commands.get(interaction.commandName);
+		if (!command) return;
+		try {
+			await command.execute(interaction.client);
+			interaction.channel.send("Wpisz ${prefix}ruda aby wyświetlić listę komend.")
+		} catch (error) {
+			if (error) console.error(error);
+			await interaction.reply({
+				content: 'Coś się popimpało i nie wyszło z komendą ;( ',
+				ephemeral: true
+			});
+		}
 	}
+	if (interaction.isContextMenu()) {
+		interaction.reply("test");
+	}
+
+
 });
 
 

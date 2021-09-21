@@ -12,7 +12,7 @@ module.exports = {
 	admin : true,
 	mod : false,
 	nsfw : false,
-	srv : false, //server
+	srv : [], //server
 	async execute(client,message,args){
 		
 		const allMessages = await fetchAll.messages(message.channel, {
