@@ -234,7 +234,7 @@ client.once('ready', () => {
 		//client.api.applications(client.user.id).guilds("518828593741299717").commands(result[0].id).delete();
 	});
 
-	let g = ["518828593741299717", "620518612024819713"]
+	let g = ["518828593741299717", "620518612024819713","710537384617312318"]
 	for (i of g) {
 		client.api.applications(client.user.id).guilds(i).commands.post({
 			data: {
