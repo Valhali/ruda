@@ -229,12 +229,14 @@ client.once('ready', () => {
 		//console.log(result[0].name, " → ", result[0].id);
 		//client.api.applications(client.user.id).commands(result[0].id).delete();
 	});
-	client.api.applications(client.user.id).guilds("518828593741299717").commands.get().then((result) => {
-		//console.log(result[0].name, " → ", result[0].id);
-		//client.api.applications(client.user.id).guilds("518828593741299717").commands(result[0].id).delete();
-	});
-
-	let g = ["518828593741299717", "620518612024819713","710537384617312318"]
+	/*client.api.applications(client.user.id).guilds("710537384617312318").commands.get().then((result) => {
+		if (typeof (result[0].name) != "undefined") {
+			console.log(result[0].name, " → ", result[0].id);
+			client.api.applications(client.user.id).guilds("710537384617312318").commands(result[0].id).delete();
+		}
+	});*/
+	// test              spiochy                faza
+	/*let g = ["518828593741299717", "620518612024819713", "710537384617312318"]
 	for (i of g) {
 		client.api.applications(client.user.id).guilds(i).commands.post({
 			data: {
@@ -243,8 +245,44 @@ client.once('ready', () => {
 				//description: 'Lista rudych komend!'
 			}
 		})
-	}
+	}*/
 	//console.log(client);*/
+
+
+	client.api.applications(client.user.id).guilds("518828593741299717").commands.post({
+		data: {
+			"name": "test",
+			"type": 1,
+			"description": "jakas tam komenda",
+			"options": [{
+					"name": "test",
+					"description": "jakis opis",
+					"type": 3,
+					"required": true,
+					"choices": [{
+							"name": "aaa",
+							"value": "animal_dog"
+						},
+						{
+							"name": "bbb",
+							"value": "animal_cat"
+						},
+						{
+							"name": "ccc",
+							"value": "animal_penguin"
+						}
+					]
+				},
+				{
+					"name": "test2",
+					"description": "bla bla bla",
+					"type": 5,
+					"required": false
+				}
+			]
+		}
+	})
+
 });
 
 
@@ -265,7 +303,7 @@ client.on("interactionCreate", async interaction => {
 		}
 	}
 	if (interaction.isContextMenu()) {
-		interaction.reply("test");
+		interaction.reply(`[TEST] ${interaction.member} Chyba działa ale nic nie robi... `);
 	}
 
 

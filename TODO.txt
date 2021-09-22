@@ -16,4 +16,6 @@ Pomysly do wprowadzenia:
 - przywroc role po powrocie na serwer
 - Jakieś losowanie spośród wskazanej rangi (bo here i everyone to każdy jeden potrafi). 
 - Licznik wejść i wyjść użytkownika
+- historia nicków
+- slowmode jako menu
 - 
