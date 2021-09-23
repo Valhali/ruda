@@ -95,7 +95,7 @@ class Util {
 			"{prefix}": client.getPrefix(srv),//prefix
 
 		}
-		console.log(re);
+		//console.log(re);
 		for (let k in re) {
 			t = t.replace(k, re[k]);
 		}

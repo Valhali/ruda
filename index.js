@@ -251,7 +251,7 @@ client.once('ready', () => {
 				for (j of result) {
 					if (typeof (result[0].name) != "undefined") {
 						console.log(j.name, " → ", j.id);
-						client.api.applications(client.user.id).guilds(i).commands(j.id).delete();
+						//client.api.applications(client.user.id).guilds(i).commands(j.id).delete();
 					}
 				}
 			});
@@ -259,13 +259,13 @@ client.once('ready', () => {
 	}
 	for (i of g) {
 		try {
-			client.api.applications(client.user.id).guilds(i).commands.post({
+			/*client.api.applications(client.user.id).guilds(i).commands.post({
 				data: {
 					name: 'test',
 					type: 3,
 					//description: 'Lista rudych komend!'
 				}
-			})
+			})*/
 		} catch {}
 	}
 	//console.log(client);*/
@@ -273,9 +273,9 @@ client.once('ready', () => {
 
 	const slashFiles = fs.readdirSync('./slash').filter(file => file.endsWith('.json'));
 	var cm = slashFiles.map((e, i) => {
-		client.api.applications(client.user.id).guilds("518828593741299717").commands.post({
+		/*client.api.applications(client.user.id).guilds("518828593741299717").commands.post({
 			data: require(`./slash/${e}`)
-		})
+		})*/
 	})
 
 

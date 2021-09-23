@@ -20,6 +20,7 @@ class Events {
             i.title = client.util.repl(i.title, i["srv"], client);
             i.img = client.util.repl(i.img, i["srv"], client);
             i.thumb = client.util.repl(i.thumb, i["srv"], client);
+            //console.log(i);
 
             if (typeof (ch) == "undefined") continue;
             let m = {};
