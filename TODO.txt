@@ -5,7 +5,7 @@ Pomysly do wprowadzenia:
 ✔- usuwanie lub nie komendy
 - /slash komendy
 - customowe slash komendy
-- auto komennda o danej godzinie
+✔- auto komennda o danej godzinie
 - ograniczenia na kanał (tylko obrazek, tylko link itp)
 - ignorowanie kanału odpowiedzi?
 - kanały zakazane/dozwolone 

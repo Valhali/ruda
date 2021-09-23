@@ -21,6 +21,7 @@ db.prepare("CREATE TABLE IF NOT EXISTS 'calendar_local' ('x' INTEGER PRIMARY KEY
 
 db.prepare("CREATE TABLE IF NOT EXISTS 'newssub' ('x' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'news' TEXT NOT NULL, 'chan' INTEGER NOT NULL, 'srv' INTEGER NOT NULL);").run();
 
+db.prepare("CREATE TABLE IF NOT EXISTS 'auto' (x INTEGER PRIMARY KEY, 'hour' INTEGER NOT NULL, 'minute' INTEGER NOT NULL, 'repeat' TEXT, 'content' TEXT NOT NULL, 'last' DATETIME, 'srv' TEXT, 'chan' TEXT, 'title' TEXT, 'thumb' TEXT, 'img' TEXT, 'author' TEXT);").run();
 
 
 module.exports = db;

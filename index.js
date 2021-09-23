@@ -225,64 +225,70 @@ client.once('ready', () => {
 		return false;
 	}
 
-	client.api.applications(client.user.id).commands.get().then((result) => {
-		//console.log(result[0].name, " → ", result[0].id);
-		//client.api.applications(client.user.id).commands(result[0].id).delete();
-	});
-	/*client.api.applications(client.user.id).guilds("710537384617312318").commands.get().then((result) => {
-		if (typeof (result[0].name) != "undefined") {
-			console.log(result[0].name, " → ", result[0].id);
-			client.api.applications(client.user.id).guilds("710537384617312318").commands(result[0].id).delete();
-		}
-	});*/
+
+	client.getAuto = (h, m) => {
+		let d = client.db.prepare("SELECT * FROM auto WHERE hour=? and minute=? ORDER BY srv ASC;").all([h, m]);
+		if (typeof (d) == "undefined") return false;
+		return d;
+	}
+
+
+	client.setAuto = (hh, mm, msg, ch, c) => {
+		let i = [hh, mm, c[2], msg.guild.id, ch, c[3], c[5], c[4], msg.author.id]
+		return client.db.prepare("INSERT OR IGNORE INTO auto(hour,minute,content,srv,chan,title,thumb,img,author) VALUES( ?,?,?,?,?,?,?,?,?) ;").run(i);
+	}
+
+	//client.api.applications(client.user.id).commands.get().then((result) => {
+	//console.log(result[0].name, " → ", result[0].id);
+	//client.api.applications(client.user.id).commands(result[0].id).delete();
+	//});
 	// test              spiochy                faza
-	/*let g = ["518828593741299717", "620518612024819713", "710537384617312318"]
+	let g = ["518828593741299717"] //, "620518612024819713", "710537384617312318"]
+
 	for (i of g) {
-		client.api.applications(client.user.id).guilds(i).commands.post({
-			data: {
-				name: 'test',
-				type: 3,
-				//description: 'Lista rudych komend!'
-			}
-		})
-	}*/
+		try {
+			client.api.applications(client.user.id).guilds(i).commands.get().then((result) => {
+				for (j of result) {
+					if (typeof (result[0].name) != "undefined") {
+						console.log(j.name, " → ", j.id);
+						client.api.applications(client.user.id).guilds(i).commands(j.id).delete();
+					}
+				}
+			});
+		} catch {}
+	}
+	for (i of g) {
+		try {
+			client.api.applications(client.user.id).guilds(i).commands.post({
+				data: {
+					name: 'test',
+					type: 3,
+					//description: 'Lista rudych komend!'
+				}
+			})
+		} catch {}
+	}
 	//console.log(client);*/
 
 
-	client.api.applications(client.user.id).guilds("518828593741299717").commands.post({
-		data: {
-			"name": "test",
-			"type": 1,
-			"description": "jakas tam komenda",
-			"options": [{
-					"name": "test",
-					"description": "jakis opis",
-					"type": 3,
-					"required": true,
-					"choices": [{
-							"name": "aaa",
-							"value": "animal_dog"
-						},
-						{
-							"name": "bbb",
-							"value": "animal_cat"
-						},
-						{
-							"name": "ccc",
-							"value": "animal_penguin"
-						}
-					]
-				},
-				{
-					"name": "test2",
-					"description": "bla bla bla",
-					"type": 5,
-					"required": false
-				}
-			]
-		}
+	const slashFiles = fs.readdirSync('./slash').filter(file => file.endsWith('.json'));
+	var cm = slashFiles.map((e, i) => {
+		client.api.applications(client.user.id).guilds("518828593741299717").commands.post({
+			data: require(`./slash/${e}`)
+		})
 	})
 
+
+	client.Event = require("./utils/event");
+	console.log(client.Event.run);
+
+	var interval = setInterval(function () {
+		client.Event.run(client);
+	}, 60 * 1000);
+
+
+
+	//console.log(client.channels.cache);
 });
 
 

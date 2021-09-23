@@ -1,0 +1,31 @@
+{
+    "name": "test",
+    "type": 1,
+    "description": "jakas tam komenda",
+    "options": [{
+            "name": "test",
+            "description": "jakis opis",
+            "type": 3,
+            "required": true,
+            "choices": [{
+                    "name": "aaa",
+                    "value": "animal_dog"
+                },
+                {
+                    "name": "bbb",
+                    "value": "animal_cat"
+                },
+                {
+                    "name": "ccc",
+                    "value": "animal_penguin"
+                }
+            ]
+        },
+        {
+            "name": "test2",
+            "description": "bla bla bla",
+            "type": 5,
+            "required": false
+        }
+    ]
+}
