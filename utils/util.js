@@ -1,3 +1,7 @@
+const {
+	CommandInteractionOptionResolver
+} = require("discord.js");
+
 class Util {
 
 	static getRandInt(int) {
@@ -40,7 +44,7 @@ class Util {
 		})
 	}
 
-/////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////
 
 	static send(client, message, cmd, msg = null, embed = null, file = null) {
 		var ch = null;
@@ -75,6 +79,27 @@ class Util {
 		}
 
 
+	}
+
+
+	static repl(txt, srv, client) {
+		if (txt == "" || txt == null || typeof (txt) == "undefined") return txt;
+		let t = txt;
+		let d = new Date();
+		let re = {
+			"{Y}": d.getFullYear(),//rok
+			"{M}": d.getMonth()+1,//miesiąc
+			"{D}": d.getDate(), //dzien
+			"{HH}": d.getHours(),//godzina
+			"{MM}": d.getMinutes(),//minuty
+			"{prefix}": client.getPrefix(srv),//prefix
+
+		}
+		console.log(re);
+		for (let k in re) {
+			t = t.replace(k, re[k]);
+		}
+		return t;
 	}
 
 }

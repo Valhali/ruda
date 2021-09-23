@@ -6,6 +6,7 @@ Pomysly do wprowadzenia:
 - /slash komendy
 - customowe slash komendy
 ✔- auto komennda o danej godzinie
+- w autokomendzie dodać zmienną na date/godz.
 - ograniczenia na kanał (tylko obrazek, tylko link itp)
 - ignorowanie kanału odpowiedzi?
 - kanały zakazane/dozwolone 

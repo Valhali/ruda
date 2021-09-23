@@ -12,10 +12,15 @@ class Events {
         let d = new Date();
         let r = client.getAuto(d.getHours(), d.getMinutes());
         if (typeof (r) == "undefined") return;
+
         for (i of r) {
-            //console.log(i);
             let ch = client.channels.cache.get(i["chan"]);
-            //console.log(ch);
+
+            i.content = client.util.repl(i.content, i["srv"], client);
+            i.title = client.util.repl(i.title, i["srv"], client);
+            i.img = client.util.repl(i.img, i["srv"], client);
+            i.thumb = client.util.repl(i.thumb, i["srv"], client);
+
             if (typeof (ch) == "undefined") continue;
             let m = {};
             if (i.title || i.thumb || i.img) {
@@ -29,6 +34,7 @@ class Events {
             } else {
                 m.content = i.content;
             }
+
             ch.send(m)
         }
 
