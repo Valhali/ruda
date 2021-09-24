@@ -57,6 +57,7 @@ for (const file of commandFiles) {
 
 // event Handler
 client.on('messageCreate', message => {
+	client.cc(message);
 	client.msg(message);
 });
 
@@ -237,6 +238,50 @@ client.once('ready', () => {
 		let i = [hh, mm, c[2], msg.guild.id, ch, c[3], c[5], c[4], msg.author.id]
 		return client.db.prepare("INSERT OR IGNORE INTO auto(hour,minute,content,srv,chan,title,thumb,img,author) VALUES( ?,?,?,?,?,?,?,?,?) ;").run(i);
 	}
+
+
+	client.getCcNames = (id) => {
+		let cmd = [],
+			j = '';
+		let d = client.db.prepare("SELECT cmd FROM command WHERE srv=?;").all([id]);
+		if (typeof (d) != "undefined") {
+			for (let i in d) {
+				if (!cmd.includes(d[i]["cmd"])) {
+					cmd.push(d[i]["cmd"]);
+				};
+			}
+		}
+
+
+		d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id LIKE ?;").all([id, "cmd_%"]);
+		if (typeof (d) != "undefined") {
+			for (let i in d) {
+				let js = JSON.parse(d[i].conf);
+				if (typeof (js["cnfid"]) == "undefined") continue;
+				j = js["cnfid"].replace("cmd_", "");
+				if (!cmd.includes(j)) {
+					cmd.push(j);
+				};
+			}
+		}
+
+
+		d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id LIKE ?;").all([id, "scmd_%"]);
+		if (typeof (d) != "undefined") {
+			for (let i in d) {
+				let js = JSON.parse(d[i].conf);
+				if (typeof (js["cnfid"]) == "undefined") continue;
+				j = js["cnfid"].replace("scmd_", "");
+				if (!cmd.includes(j)) {
+					cmd.push(j);
+				};
+			}
+		}
+
+		return cmd.sort();
+	}
+
+
 
 	//client.api.applications(client.user.id).commands.get().then((result) => {
 	//console.log(result[0].name, " → ", result[0].id);

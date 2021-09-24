@@ -1,4 +1,3 @@
-Pomysly do wprowadzenia:
 - Obsługa wątków
 - Obsługa przycisków/combo
 ✔- wyłączenia/ukrycie komend

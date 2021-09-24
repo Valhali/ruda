@@ -37,7 +37,7 @@ module.exports = {
 
 			disable = client.getCmdDisabled(cmd.name, message.guild.id);
 			hidden = client.getCmdHidden(cmd.name, message.guild.id);
-			if (!cmd.hidden && !disable && !hidden ) {
+			if (!cmd.hidden && !disable && !hidden) {
 				if (cmd.srv == false || cmd.srv == message.guild.id) {
 					return ` ${p}**${util.tn(cmd.name,2)}** ${cmd.ussage} → ${cmd.description}`;
 				}
@@ -55,7 +55,20 @@ module.exports = {
 			.setThumbnail("https://upload.wikimedia.org/wikipedia/commons/8/88/Radar2.gif");
 
 
-		return client.util.send(client, message, this.name, null, embed);
+		client.util.send(client, message, this.name, null, embed);
+
+
+		let cmd = client.getCcNames(message.guild.id);
+		const embed2 = new Discord.MessageEmbed();
+		embed2
+			.setColor(color.warning)
+			.setTitle("Lista komend serwerowych")
+			.setDescription(
+				`${cmd.filter(e => {return e !== null} ).join(", ")}`
+			)
+
+		return client.util.send(client, message, this.name, null, embed2);
+
 
 	}
 }

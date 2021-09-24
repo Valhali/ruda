@@ -8,6 +8,11 @@ class Util {
 		return Math.floor(Math.random() * int);
 	}
 
+	static getRandomInt(min, max) {		
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	  }
 
 	static chunk(array, chunkSize) {
 		const temp = [];
@@ -82,7 +87,7 @@ class Util {
 	}
 
 
-	static repl(txt, srv, client) {
+	static repl(txt, srv, client, ad={}) {
 		if (txt == "" || txt == null || typeof (txt) == "undefined") return txt;
 		let t = txt;
 		let d = new Date();
@@ -95,12 +100,14 @@ class Util {
 			"{prefix}": client.getPrefix(srv),//prefix
 
 		}
+		re = Object.assign(re, ad);
 		//console.log(re);
 		for (let k in re) {
 			t = t.replace(k, re[k]);
 		}
 		return t;
 	}
+
 
 }
 /////////////////////////////////////////////////////////
