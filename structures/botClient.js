@@ -34,6 +34,12 @@ class botClient extends Client {
 
 	}
 
+	async pobierz(url, headers = {}) {
+		var axios = require('axios');
+		return await axios.get(url, {}, headers);
+
+	}
+
 	msg(message) {
 		let client = this;
 		if (message.content && !message.author.bot) console.log(message.content);
@@ -164,10 +170,9 @@ class botClient extends Client {
 
 			odp2["img"] = await client.util.tgif(client, odp2["img"]);
 			odp2["th"] = await client.util.tgif(client, odp2["th"]);
-			
-			/*
-			odp2["img"] = await timg(odp2["img"])  
-			odp2["th"] = await timg(odp2["th"])   */
+
+			odp2["img"] = await client.util.timg(client, odp2["img"]);
+			odp2["th"] = await client.util.timg(client, odp2["th"]) ;
 
 
 			const embed = new MessageEmbed();

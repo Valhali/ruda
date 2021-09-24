@@ -125,19 +125,31 @@ class Util {
 
 	static async tgif(client, txt) {
 		let g = txt.toLowerCase().match(`{gif:[a-z0-9 \-\_ąęśćżźńół]+}`);
-		//console.log("g:", g);
 		if (g == null) return txt;
 		let Results = await client.Tenor.Search.Random(g[0], 3);
 		let i = client.util.getRandomInt(0, Results.length - 1);
-		if (typeof (Results) == "undefined" || Results.length==0) return '';
-		
+		if (typeof (Results) == "undefined" || Results.length == 0) return '';
+
 		if (typeof (Results[i].media[0].gif.url) == "undefined") return '';
 		return Results[i].media[0].gif.url;
-		//});
-
-		//if (g2 != null) return 
 	}
 
+
+
+	static async timg(client, txt) {
+		let g = txt.toLowerCase().match(`{img:[a-z0-9 \-\_ąęśćżźńół]+}`);
+		if (g == null) return txt;
+		let Results = await client.pobierz(`https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}&cx=${process.env.SEARCH_ENGINE_ID}&q=${g[0]}&searchType=image`, {
+			headers: {
+				'referer': 'https://heroku.com'
+			}
+		});
+		let i = client.util.getRandomInt(0, Results.data.items.length - 1);
+		if (typeof (Results) == "undefined" || Results.length == 0) return '';
+		//console.log(Results.data.items[i].link, i );
+		if (typeof (Results.data.items[i].link) == "undefined") return '';
+		return Results.data.items[i].link;
+	}
 
 
 
