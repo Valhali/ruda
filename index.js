@@ -57,13 +57,14 @@ for (const file of commandFiles) {
 
 // event Handler
 client.on('messageCreate', message => {
-	client.cc(message);
-	client.msg(message);
+	if (typeof(message)!="undefined") client.cc(message);
+	if (typeof(message)!="undefined")client.msg(message);
 });
 
-client.on('messageUpdate', (oldmmsg, message) => {
-	console.log(oldmmsg.content);
-	client.msg(message);
+client.on('messageUpdate', (oldmsg, message) => {
+	console.log(oldmsg.content);
+	if (typeof(message)!="undefined") client.cc(message);
+	if (typeof(message)!="undefined")client.msg(message);
 });
 
 
