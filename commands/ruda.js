@@ -59,7 +59,7 @@ module.exports = {
 
 
 		let cmd = client.getCcNames(message.guild.id);
-		if (typeof (cmd) != "undefined") {
+		if (typeof (cmd) != "undefined" && cmd.length>0) {
 			const embed2 = new Discord.MessageEmbed();
 			embed2
 				.setColor(color.warning)
