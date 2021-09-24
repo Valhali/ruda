@@ -108,6 +108,18 @@ class Util {
 		return t;
 	}
 
+	static del(msg){
+		console.log(typeof(msg));
+		if (typeof(msg)=="undefined") return;
+		let d2 = client.getDelCmd(msg.guild.id);
+		if (d2) {
+			try {
+				msg.delete();
+			} catch (err) {
+				console.log(err);
+			};
+		};
+	}
 
 }
 /////////////////////////////////////////////////////////
