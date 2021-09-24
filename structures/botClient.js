@@ -172,7 +172,7 @@ class botClient extends Client {
 			odp2["th"] = await client.util.tgif(client, odp2["th"]);
 
 			odp2["img"] = await client.util.timg(client, odp2["img"]);
-			odp2["th"] = await client.util.timg(client, odp2["th"]) ;
+			odp2["th"] = await client.util.timg(client, odp2["th"]);
 
 
 			const embed = new MessageEmbed();
@@ -191,6 +191,118 @@ class botClient extends Client {
 			client.util.del(message, client);
 			return client.util.send(client, message, command, odp);
 		}
+
+	}
+
+
+	async scc(message) {
+		let client = this;
+		let id = message.guild.id;
+		let p = client.getPrefix(message.guild.id);
+		if (!message.content.startsWith(p)) return;
+		const args = message.content.slice(p.length).split(/ +/);
+		const command = args.shift().toLowerCase();
+		let subcommand = '';
+		if (args.length>0) subcommand= args.shift().toLowerCase();
+		let odp2 = [];
+
+
+		let chars = ["<", ">", "!", "@", "#"];
+		let cnf = {};
+		let sc = [];
+		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id=?;").all([id, `scmd_${command}`]);
+		if (typeof (d) != "undefined") {
+			if (typeof (d[0]) != "undefined") {
+				cnf = JSON.parse(d[0].conf);
+				if (typeof (cnf["subcmd"]) != "undefined") {
+					for (let i in cnf["subcmd"]) {
+						sc.push(i);
+					}
+				}
+			}
+		}
+
+		let scmd = subcommand;
+		let oscmd = scmd;
+		for (let d of chars) scmd = scmd.replace(d, "");
+
+
+		if (oscmd != scmd) {
+			for (l of sc) {
+				if (l == oscmd) {
+					cnf["subcmd"][scmd] = cnf["subcmd"][oscmd];
+					delete cnf["subcmd"][oscmd];
+				}
+			}
+		}
+
+
+		if (scmd == "" || !(scmd in cnf["subcmd"])) {
+			let msg = `Dla komendy \`${command}\` istnieją następujące sub-komendy: \`${sc.join(", ")}\``;
+			client.util.del(message, client);
+			return client.util.send(client, message, command, msg);
+		}
+
+
+		for (let k in cnf["subcmd"][scmd]) {
+			odp2.push(cnf["subcmd"][scmd][k])
+		}
+
+
+		let v = 0,
+			usrav = '',
+			usrni = '';
+		if (odp2.length == 0) return;
+		odp2 = odp2[client.util.getRandomInt(0, odp2.length - 1)];
+		if (message.mentions.users.size) {
+			usrav = message.mentions.users.first().displayAvatarURL({
+				format: "png",
+				size: 1024
+			});
+			usrni = message.guild.members.cache.get(message.mentions.users.first().id).displayName;
+		}
+		let auav = '',
+			auni = ''
+		auni = message.guild.members.cache.get(message.author.id).displayName;
+		auav = message.author.displayAvatarURL({
+			format: "png",
+			size: 1024
+		});
+		let re = {
+			"{autor.nick}": auni,
+			"{autor.avatar}": auav,
+			"{param.avatar}": usrav,
+			"{param.nick}": usrni,
+			"{autor}": message.author,
+			"{param}": args.join(" "),
+		}
+
+
+console.log(odp2);
+
+
+		odp2["odp"] = client.util.repl(odp2["odp"], message.guild.id, client, re);
+		odp2["tyt"] = client.util.repl(odp2["tyt"], message.guild.id, client, re);
+		odp2["img"] = client.util.repl(odp2["img"], message.guild.id, client, re);
+		odp2["th"] = client.util.repl(odp2["th"], message.guild.id, client, re);
+
+		odp2["img"] = await client.util.tgif(client, odp2["img"]);
+		odp2["th"] = await client.util.tgif(client, odp2["th"]);
+
+		odp2["img"] = await client.util.timg(client, odp2["img"]);
+		odp2["th"] = await client.util.timg(client, odp2["th"]);
+
+
+		const embed = new MessageEmbed();
+		embed.setColor(client.setting.color.info)
+			.setTitle(odp2.tyt)
+			.setDescription(odp2.odp)
+			.setImage(odp2.img)
+			.setThumbnail(odp2.th);
+		//console.log("embed: ", embed)	;
+		client.util.del(message, client);
+		return client.util.send(client, message, command, null, embed);
+
 
 	}
 
