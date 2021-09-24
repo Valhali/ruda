@@ -59,15 +59,17 @@ module.exports = {
 
 
 		let cmd = client.getCcNames(message.guild.id);
-		const embed2 = new Discord.MessageEmbed();
-		embed2
-			.setColor(color.warning)
-			.setTitle("Lista komend serwerowych")
-			.setDescription(
-				`${cmd.filter(e => {return e !== null} ).join(", ")}`
-			)
+		if (typeof (cmd) != "undefined") {
+			const embed2 = new Discord.MessageEmbed();
+			embed2
+				.setColor(color.warning)
+				.setTitle("Lista komend serwerowych")
+				.setDescription(
+					`${cmd.filter(e => {return e !== null} ).join(", ")}`
+				)
 
-		return client.util.send(client, message, this.name, null, embed2);
+			return client.util.send(client, message, this.name, null, embed2);
+		}
 
 
 	}
