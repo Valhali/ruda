@@ -16,6 +16,15 @@ class botClient extends Client {
 		this.util = require("../utils/util");
 		this.setting = require("../bot_setting.json");
 		this.getPrefix;
+
+		this.Tenor = require("tenorjs").client({
+			"Key": process.env.TENOR, // https://tenor.com/developer/keyregistration
+			"Filter": "off", // "off", "low", "medium", "high", not case sensitive
+			"Locale": "en_US", // Your locale here, case-sensitivity depends on input
+			"MediaFilter": "minimal", // either minimal or basic, not case sensitive
+			"DateFormat": "D/MM/YYYY - H:mm:ss A" // Change this accordingly
+		});
+
 	}
 
 	downl(url) {
@@ -74,7 +83,7 @@ class botClient extends Client {
 
 			try {
 				comid.execute(client, message, args);
-				if (comid.nodel) return;				
+				if (comid.nodel) return;
 				client.util.del(message, client);
 
 			} catch (error) {
@@ -85,7 +94,7 @@ class botClient extends Client {
 
 	}
 
-	cc(message) {
+	async cc(message) {
 		let client = this;
 		let id = message.guild.id;
 		let p = client.getPrefix(message.guild.id);
@@ -95,7 +104,7 @@ class botClient extends Client {
 		let odp = [],
 			odp2 = [],
 			cnf = [];
-		
+
 		let d = client.db.prepare("SELECT * FROM command WHERE srv=? AND cmd=?;").all([id, command]);
 		if (typeof (d) != "undefined") {
 			for (let i in d) {
@@ -152,12 +161,13 @@ class botClient extends Client {
 			odp2["tyt"] = client.util.repl(odp2["tyt"], message.guild.id, client, re);
 			odp2["img"] = client.util.repl(odp2["img"], message.guild.id, client, re);
 			odp2["th"] = client.util.repl(odp2["th"], message.guild.id, client, re);
+
+			odp2["img"] = await client.util.tgif(client, odp2["img"]);
+			odp2["th"] = await client.util.tgif(client, odp2["th"]);
+			
 			/*
-        odp2["img"] = await tgif(odp2["img"])  
-        odp2["th"] = await tgif(odp2["th"])  
-        
-        odp2["img"] = await timg(odp2["img"])  
-        odp2["th"] = await timg(odp2["th"])   */
+			odp2["img"] = await timg(odp2["img"])  
+			odp2["th"] = await timg(odp2["th"])   */
 
 
 			const embed = new MessageEmbed();
@@ -166,7 +176,8 @@ class botClient extends Client {
 				.setDescription(odp2.odp)
 				.setImage(odp2.img)
 				.setThumbnail(odp2.th);
-				client.util.del(message, client);
+			//console.log("embed: ", embed)	;
+			client.util.del(message, client);
 			return client.util.send(client, message, command, null, embed);
 		}
 		if (v == 0 && odp.length > 0) {
@@ -177,6 +188,9 @@ class botClient extends Client {
 		}
 
 	}
+
+
+
 
 
 

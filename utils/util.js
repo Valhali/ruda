@@ -8,11 +8,11 @@ class Util {
 		return Math.floor(Math.random() * int);
 	}
 
-	static getRandomInt(min, max) {		
+	static getRandomInt(min, max) {
 		min = Math.ceil(min);
 		max = Math.floor(max);
 		return Math.floor(Math.random() * (max - min + 1)) + min;
-	  }
+	}
 
 	static chunk(array, chunkSize) {
 		const temp = [];
@@ -87,17 +87,17 @@ class Util {
 	}
 
 
-	static repl(txt, srv, client, ad={}) {
+	static repl(txt, srv, client, ad = {}) {
 		if (txt == "" || txt == null || typeof (txt) == "undefined") return txt;
 		let t = txt;
 		let d = new Date();
 		let re = {
-			"{Y}": d.getFullYear(),//rok
-			"{M}": d.getMonth()+1,//miesiąc
+			"{Y}": d.getFullYear(), //rok
+			"{M}": d.getMonth() + 1, //miesiąc
 			"{D}": d.getDate(), //dzien
-			"{HH}": d.getHours(),//godzina
-			"{MM}": d.getMinutes(),//minuty
-			"{prefix}": client.getPrefix(srv),//prefix
+			"{HH}": d.getHours(), //godzina
+			"{MM}": d.getMinutes(), //minuty
+			"{prefix}": client.getPrefix(srv), //prefix
 
 		}
 		re = Object.assign(re, ad);
@@ -108,9 +108,9 @@ class Util {
 		return t;
 	}
 
-	static del(msg, client){
-		console.log(typeof(msg));
-		if (typeof(msg)=="undefined") return;
+	static del(msg, client) {
+		console.log(typeof (msg));
+		if (typeof (msg) == "undefined" || msg == '') return;
 		let d2 = client.getDelCmd(msg.guild.id);
 		if (d2) {
 			try {
@@ -120,6 +120,28 @@ class Util {
 			};
 		};
 	}
+
+
+
+	static async tgif(client, txt) {
+		let g = txt.toLowerCase().match(`{gif:[a-z0-9 \-\_ąęśćżźńół]+}`);
+		//console.log("g:", g);
+		if (g == null) return txt;
+		let Results = await client.Tenor.Search.Random(g[0], 3);
+		let i = client.util.getRandomInt(0, Results.length - 1);
+		if (typeof (Results) == "undefined" || Results.length==0) return '';
+		
+		if (typeof (Results[i].media[0].gif.url) == "undefined") return '';
+		return Results[i].media[0].gif.url;
+		//});
+
+		//if (g2 != null) return 
+	}
+
+
+
+
+
 
 }
 /////////////////////////////////////////////////////////

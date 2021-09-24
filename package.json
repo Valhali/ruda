@@ -1,7 +1,7 @@
 {
   "name": "ruda-bot",
   "version": "3.0.0",
-  "description": "",  
+  "description": "",
   "engines": {
     "node": "16.x"
   },
@@ -25,11 +25,10 @@
     "discord-api-types": "^0.23.1",
     "discord-fetch-all": "^3.0.2",
     "discord.js": "^13.1.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "jssoup": "0.0.12",
     "request": "^2.88.2",
-    "dotenv": "^8.6.0"
-  },
-  "devDependencies": {
+    "tenorjs": "^1.0.8"
   }
 }
