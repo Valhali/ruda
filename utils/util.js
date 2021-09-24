@@ -108,7 +108,7 @@ class Util {
 		return t;
 	}
 
-	static del(msg){
+	static del(msg, client){
 		console.log(typeof(msg));
 		if (typeof(msg)=="undefined") return;
 		let d2 = client.getDelCmd(msg.guild.id);

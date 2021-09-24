@@ -75,7 +75,7 @@ class botClient extends Client {
 			try {
 				comid.execute(client, message, args);
 				if (comid.nodel) return;				
-				client.util.del(message);
+				client.util.del(message, client);
 
 			} catch (error) {
 				console.error(error);
@@ -166,13 +166,13 @@ class botClient extends Client {
 				.setDescription(odp2.odp)
 				.setImage(odp2.img)
 				.setThumbnail(odp2.th);
-				client.util.del(message);
+				client.util.del(message, client);
 			return client.util.send(client, message, command, null, embed);
 		}
 		if (v == 0 && odp.length > 0) {
 			odp = odp[client.util.getRandomInt(0, odp.length - 1)];
 			odp = client.util.repl(odp, message.guild.id, client, re);
-			client.util.del(message);
+			client.util.del(message, client);
 			return client.util.send(client, message, command, odp);
 		}
 
