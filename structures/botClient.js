@@ -211,7 +211,8 @@ class botClient extends Client {
 		let cnf = {};
 		let sc = [];
 		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id=?;").all([id, `scmd_${command}`]);
-		if (typeof (d) == "undefined" || d == null) return;
+		
+		if (typeof (d[0]) == "undefined" || d == null) return;
 		if (typeof (d) != "undefined") {
 			if (typeof (d[0]) != "undefined") {
 				cnf = JSON.parse(d[0].conf);
