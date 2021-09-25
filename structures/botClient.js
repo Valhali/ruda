@@ -203,7 +203,7 @@ class botClient extends Client {
 		const args = message.content.slice(p.length).split(/ +/);
 		const command = args.shift().toLowerCase();
 		let subcommand = '';
-		if (args.length>0) subcommand= args.shift().toLowerCase();
+		if (args.length > 0) subcommand = args.shift().toLowerCase();
 		let odp2 = [];
 
 
@@ -211,6 +211,7 @@ class botClient extends Client {
 		let cnf = {};
 		let sc = [];
 		let d = client.db.prepare("SELECT conf FROM config WHERE serwer=? and id=?;").all([id, `scmd_${command}`]);
+		if (typeof (d) == "undefined" || d == null) return;
 		if (typeof (d) != "undefined") {
 			if (typeof (d[0]) != "undefined") {
 				cnf = JSON.parse(d[0].conf);
@@ -221,6 +222,7 @@ class botClient extends Client {
 				}
 			}
 		}
+
 
 		let scmd = subcommand;
 		let oscmd = scmd;
@@ -278,7 +280,7 @@ class botClient extends Client {
 		}
 
 
-console.log(odp2);
+		console.log(odp2);
 
 
 		odp2["odp"] = client.util.repl(odp2["odp"], message.guild.id, client, re);

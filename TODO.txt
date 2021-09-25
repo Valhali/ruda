@@ -14,7 +14,7 @@
 - cooldown na komendy per srv/usr/chan/role
 - podpiąc powiadomienia z YT
 - przywroc role po powrocie na serwer
-- Jakieś losowanie spośród wskazanej rangi (bo here i everyone to każdy jeden potrafi). 
+- Jakieś losowanie spośród wskazanej rangi  
 - Licznik wejść i wyjść użytkownika
 - historia nicków
 - slowmode jako menu
