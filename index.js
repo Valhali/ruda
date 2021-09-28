@@ -298,8 +298,8 @@ client.once('ready', () => {
 			ins = false;
 		}
 		js.count++;
-		console.log(js);
 		js.date.push(Date.now())
+		console.log(js);
 		js = JSON.stringify(js);
 		if (ins) {
 			client.db.prepare("INSERT OR IGNORE INTO leave(val, usr, srv) VALUES (?, ?, ?);").run([js, usr, srv]);
