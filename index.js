@@ -70,10 +70,15 @@ client.on('messageUpdate', (oldmsg, message) => {
 });
 
 
-
+client.on("error", (e) => console.error(e));
+//client.on("warn", (e) => console.warn(e));
+//client.on("debug", (e) => console.info(e));
 
 client.once('ready', () => {
 	console.log(client.user.username + ' is Ready!');
+
+	console.log(`on ${client.guilds.cache.size} servers, for ${client.users.cache.size} users.`);
+
 	client.user.setActivity('Instrukcja przejmowania władzy nad światem', {
 		type: 'WATCHING'
 	});
@@ -308,6 +313,28 @@ client.once('ready', () => {
 		}
 
 	}
+
+
+	client.userNickHistory = (old, now) => {
+		let js = {
+			history: []
+		};
+		let ins = true;
+		let d = client.db.prepare("SELECT val FROM nickHistory WHERE srv=? and usr=?;").get([now.guild.id, now.id]);
+		if (typeof (d) != "undefined") {
+			js = JSON.parse(d.val);
+			ins = false;
+		}
+		js.history.push([Date.now(), `${now.user.username}#${now.user.discriminator}`, now.displayName]);
+		console.log(js);
+		js = JSON.stringify(js);
+		if (ins) {
+			client.db.prepare("INSERT OR IGNORE INTO nickHistory(val, usr, srv) VALUES (?, ?, ?);").run([js, now.id, now.guild.id]);
+		} else {
+			client.db.prepare("UPDATE OR IGNORE nickHistory SET val=? WHERE usr=? AND srv=?;").run([js, now.id, now.guild.id]);
+		}
+
+	}
 	//client.api.applications(client.user.id).commands.get().then((result) => {
 	//console.log(result[0].name, " → ", result[0].id);
 	//client.api.applications(client.user.id).commands(result[0].id).delete();
@@ -389,6 +416,10 @@ client.on('guildMemberRemove', async member => {
 	client.userLeave(member.id, member.guild.id);
 });
 
+client.on('guildMemberUpdate', async (old, now) => {
+	console.log(old.displayName, now.displayName);
+	if (old.user.username != now.user.username || old.displayName != now.displayName) return client.userNickHistory(old, now);
+});
 
 client.on('guildMemberAdd', async member => {
 	console.log(member.user.username)
