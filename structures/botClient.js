@@ -42,7 +42,7 @@ class botClient extends Client {
 
 	msg(message) {
 		let client = this;
-		if (message.content && !message.author.bot) console.log(message.content);
+		//if (message.content && !message.author.bot) console.log(message.content);
 		// if user message by DM
 		if (message.guild == null && !message.author.bot) {
 			return;
