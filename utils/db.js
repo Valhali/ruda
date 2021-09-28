@@ -23,5 +23,6 @@ db.prepare("CREATE TABLE IF NOT EXISTS 'newssub' ('x' INTEGER PRIMARY KEY AUTOIN
 
 db.prepare("CREATE TABLE IF NOT EXISTS 'auto' (x INTEGER PRIMARY KEY, 'hour' INTEGER NOT NULL, 'minute' INTEGER NOT NULL, 'repeat' TEXT, 'content' TEXT NOT NULL, 'last' DATETIME, 'srv' TEXT, 'chan' TEXT, 'title' TEXT, 'thumb' TEXT, 'img' TEXT, 'author' TEXT);").run();
 
+db.prepare("CREATE TABLE IF NOT EXISTS 'leave' ('x' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'usr' TEXT NOT NULL, 'srv' TEXT NOT NULL, 'val' TEXT NOT NULL);").run();
 
 module.exports = db;

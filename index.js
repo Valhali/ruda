@@ -286,6 +286,28 @@ client.once('ready', () => {
 
 
 
+	client.userLeave = (usr, srv) => {
+		let js = {
+			count: 0,
+			date: []
+		};
+		let ins = true;
+		let d = client.db.prepare("SELECT val FROM leave WHERE srv=? and usr=?;").get([srv, usr]);
+		if (typeof (d) != "undefined") {
+			js = JSON.parse(d.val);
+			ins = false;
+		}
+		js.count++;
+		console.log(js);
+		js.date.push(Date.now())
+		js = JSON.stringify(js);
+		if (ins) {
+			client.db.prepare("INSERT OR IGNORE INTO leave(val, usr, srv) VALUES (?, ?, ?);").run([js, usr, srv]);
+		} else {
+			client.db.prepare("UPDATE OR IGNORE leave SET val=? WHERE id=? AND srv=?;").run([js, usr, srv]);
+		}
+
+	}
 	//client.api.applications(client.user.id).commands.get().then((result) => {
 	//console.log(result[0].name, " → ", result[0].id);
 	//client.api.applications(client.user.id).commands(result[0].id).delete();
@@ -363,7 +385,14 @@ client.on("interactionCreate", async interaction => {
 
 });
 
+client.on('guildMemberRemove', async member => {
+	client.userLeave(member.id, member.guild.id);
+});
 
+
+client.on('guildMemberAdd', async member => {
+	console.log(member.user.username)
+});
 
 client.login(Token)
 	.then(e => {
