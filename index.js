@@ -63,7 +63,7 @@ client.on('messageCreate', message => {
 });
 
 client.on('messageUpdate', (oldmsg, message) => {
-	console.log(oldmsg.content);
+	//console.log(oldmsg.content);
 	if (typeof (message) != "undefined") client.cc(message);
 	if (typeof (message) != "undefined") client.scc(message);
 	if (typeof (message) != "undefined") client.msg(message);
@@ -417,8 +417,10 @@ client.on('guildMemberRemove', async member => {
 });
 
 client.on('guildMemberUpdate', async (old, now) => {
-	console.log(old.displayName, now.displayName);
-	if (old.user.username != now.user.username || old.displayName != now.displayName) return client.userNickHistory(old, now);
+	if (old.user.username != now.user.username || old.displayName != now.displayName) {
+		return client.userNickHistory(old, now);
+		console.log(old.displayName, now.displayName);
+	}
 });
 
 client.on('guildMemberAdd', async member => {
